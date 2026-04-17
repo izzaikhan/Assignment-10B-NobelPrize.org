@@ -1,0 +1,44 @@
+---
+title: "Assignment 10B NobelPrize.org: Approach"
+author: "IZZA KHAN"
+format: html
+---
+
+## Introduction
+
+In this assignment, I will use the Nobel Prize public APIs to retrieve data in JSON format and analyze it using R. The goal is to explore patterns in Nobel Prize winners by transforming the JSON data into tidy data frames and answering four data-driven questions.
+
+## Data Source and Approach
+
+I will use the Nobel Prize API from the Nobel Prize Developer Zone. This API provides structured JSON data on laureates, prizes, categories, and countries.
+
+My approach will include:
+
+* Retrieving JSON data from the API
+* Parsing the JSON into R
+* Converting it into tidy data frames
+* Cleaning variables such as year, category, and country
+* Using filtering, grouping, and joins to analyze the data
+
+## Research Questions
+
+1. Which countries have produced the most Nobel Prize winners?
+2. How has the number of Nobel Prize winners changed over time?
+3. Which Nobel Prize category has the highest number of winners?
+4. Which countries have the most laureates who were born in one country but associated with another country?
+
+## Planned Methods
+
+To answer these questions, I will:
+
+* Group data by country and category
+* Analyze trends over time
+* Join datasets to compare birthplace and award affiliation
+* Summarize results using tables and visualizations
+
+## Anticipated Challenges
+
+* JSON data may be nested and require flattening
+* Some data fields may be missing or inconsistent
+* Comparing birth country vs. award country may require joins
+* Multiple laureates per prize may complicate counts
