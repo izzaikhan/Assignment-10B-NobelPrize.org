@@ -1,0 +1,104 @@
+---
+title: "10B CODE BASE"
+author: "IZZA KHAN"
+format: html
+---
+
+```{R}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+```{R}
+url <- "https://api.nobelprize.org/v1/laureate.json"
+data_raw <- fromJSON(url)
+```
+
+```{R}
+names(data_raw)
+```
+
+```{R}
+laureates <- data_raw$laureates
+```
+
+```{R}
+laureates_df <- as.data.frame(laureates)
+head(laureates_df)
+```
+
+```{R}
+laureates_df <- laureates_df %>%
+  mutate(
+    bornCountry = as.character(bornCountry),
+    diedCountry = as.character(diedCountry)
+  )
+```
+
+QUESTION 1
+```{R}
+q1 <- laureates_df %>%
+  group_by(bornCountry) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(10)
+
+q1
+```
+Answer:
+The results show that a small number of countries dominate Nobel Prize winners, with the highest counts appearing at the top of the table.
+
+QUESTION 2
+```{R}
+prizes_url <- "https://api.nobelprize.org/v1/prize.json"
+prizes_raw <- fromJSON(prizes_url)
+```
+
+```{R}
+prizes <- prizes_raw$prizes
+prizes_df <- as.data.frame(prizes)
+head(prizes_df)
+```
+
+```{R}
+q2 <- prizes_df %>%
+  group_by(year) %>%
+  summarise(count = n())
+```
+
+```{R}
+ggplot(q2, aes(x = as.numeric(year), y = count)) +
+  geom_line() +
+  labs(title = "Nobel Prizes Over Time", x = "Year", y = "Count")
+```
+Answer:
+The number of Nobel Prizes awarded changes over time, showing fluctuations across different years.
+
+QUESTION 3
+```{R}
+q3 <- prizes_df %>%
+  group_by(category) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+q3
+```
+Answer:
+Some categories appear more frequently than others, indicating differences in how often prizes are awarded by field.
+
+QUESTION 4
+```{R}
+q4 <- laureates_df %>%
+  filter(!is.na(bornCountry) & !is.na(diedCountry)) %>%
+  filter(bornCountry != diedCountry) %>%
+  group_by(bornCountry, diedCountry) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(10)
+
+q4
+```
+Answer:
+This analysis highlights cases where Nobel laureates were born in one country but later associated with another, reflecting migration and global movement of talent.
